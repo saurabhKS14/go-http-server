@@ -59,7 +59,7 @@ func handleRequest(conn net.Conn) {
 		fmt.Println(messages[0])
 		// call := messages[0]
 		request := strings.Split(messages[0], " ")
-		user_agent := strings.Split(messages[2], " ")[1]
+		user_agent := strings.TrimSpace(strings.Split(messages[2], ":")[1])
 		fmt.Println(request[0])
 		path := request[1]
 		// http_version := messages[2]
