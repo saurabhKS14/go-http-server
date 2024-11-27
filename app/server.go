@@ -52,9 +52,10 @@ func handleRequest(conn net.Conn) {
 		messages := strings.Split(string(data), "\r\n")
 
 		// for _, message := range messages {
-
+		fmt.Println(messages[0])
 		// call := messages[0]
 		not_headers := strings.Split(messages[0], " ")
+		fmt.Println(not_headers[0])
 		path := not_headers[1]
 		// http_version := messages[2]
 		switch path {
