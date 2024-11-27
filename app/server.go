@@ -49,14 +49,18 @@ func handleRequest(conn net.Conn) {
 				fmt.Println(err.Error())
 			}
 		}
-		messages := strings.Split(string(data), " ")
+		if data == 0 {
+			fmt.Println("No Data Read")
+			break
+		}
+		messages := strings.Split(string(buf), "\r\n")
 
 		// for _, message := range messages {
-		fmt.Println(messages[1])
+		fmt.Println(messages[0])
 		// call := messages[0]
-		// not_headers := strings.Split(messages[0], " ")
-		// fmt.Println(not_headers[0])
-		path := messages[1]
+		not_headers := strings.Split(messages[0], " ")
+		fmt.Println(not_headers[0])
+		path := not_headers[1]
 		// http_version := messages[2]
 		switch path {
 		case "/":
