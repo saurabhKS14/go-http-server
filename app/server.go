@@ -59,6 +59,7 @@ func handleRequest(conn net.Conn) {
 		fmt.Println(messages[0])
 		// call := messages[0]
 		request := strings.Split(messages[0], " ")
+		user_agent := strings.Split(messages[2], " ")[1]
 		fmt.Println(request[0])
 		path := request[1]
 		// http_version := messages[2]
@@ -67,6 +68,8 @@ func handleRequest(conn net.Conn) {
 		} else if strings.HasPrefix(path, "/echo") {
 			passed_string := strings.SplitN(path, "/", 3)[2]
 			conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(passed_string), passed_string)))
+		} else if strings.HasPrefix(path, "/user-agent") {
+			conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(user_agent), user_agent)))
 		} else {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		}
