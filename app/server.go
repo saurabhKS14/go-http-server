@@ -71,6 +71,17 @@ func handleRequest(conn net.Conn) {
 		} else if strings.HasPrefix(path, "/user-agent") {
 			user_agent := strings.TrimSpace(strings.Split(messages[2], ":")[1])
 			conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(user_agent), user_agent)))
+		} else if strings.HasPrefix(path, "/files/") {
+			dir := os.Args[2]
+			file_name := strings.Split(path, "/")[2]
+
+			content, err := os.ReadFile(dir + file_name)
+			if err != nil {
+				conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
+			} else {
+				conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: %d\r\n\r\n%s", len(content), content)))
+			}
+
 		} else {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		}
