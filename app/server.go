@@ -54,7 +54,8 @@ func handleRequest(conn net.Conn) {
 		// for _, message := range messages {
 
 		// call := messages[0]
-		path := messages[1]
+		not_headers := strings.Split(messages[0], " ")
+		path := not_headers[1]
 		// http_version := messages[2]
 		switch path {
 		case "/":
